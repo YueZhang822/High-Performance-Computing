@@ -1,0 +1,21 @@
+#!/bin/bash
+  
+#SBATCH --account=mpcs51087
+#SBATCH --job-name=example_sbatch
+#SBATCH --output=out/%j.%N.stdout
+#SBATCH --error=err/%j.%N.stderr
+#SBATCH --error=example_sbatch.err
+#SBATCH --time=01:00:00
+#SBATCH --partition=caslake
+#SBATCH --nodes=16
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=20000
+
+n=4
+m=4
+th=16
+
+echo "n=$n m=$m threads=$th"
+
+module load openmpi
+mpirun ./advection.o 4000 1.0 1.0 1.25e-4 $n $m $th
